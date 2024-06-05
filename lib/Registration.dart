@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mad_mid/home.dart';
+import 'package:mad_mid/login.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -39,10 +39,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data['status'] == 'success') {
+          // Navigate to the login page
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HomeScreen(),
+              builder: (context) => LoginScreen(), // Assuming LoginScreen is the name of your login page
             ),
           );
         } else {
@@ -58,65 +59,131 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Registration')),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter email';
-                  } else if (!value.contains('@')) {
-                    return 'Enter a valid email';
-                  }
-                  return null;
-                },
+      body: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('1.jpg'), // Make sure you have this image in your assets folder
+                fit: BoxFit.cover,
               ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter password';
-                  } else if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _firstNameController,
-                decoration: InputDecoration(labelText: 'First Name'),
-                validator: (value) => value!.isEmpty ? 'Enter first name' : null,
-              ),
-              TextFormField(
-                controller: _lastNameController,
-                decoration: InputDecoration(labelText: 'Last Name'),
-                validator: (value) => value!.isEmpty ? 'Enter last name' : null,
-              ),
-              TextFormField(
-                controller: _mobileController,
-                decoration: InputDecoration(labelText: 'Mobile'),
-                validator: (value) => value!.isEmpty ? 'Enter mobile number' : null,
-              ),
-              TextFormField(
-                controller: _photoController,
-                decoration: InputDecoration(labelText: 'Photo URL'),
-                validator: (value) => value!.isEmpty ? 'Enter photo URL' : null,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _register,
-                child: Text('Register'),
-              ),
-            ],
+            ),
           ),
-        ),
+          // Form content
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          filled: true,
+                          fillColor: Colors.white70,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter email';
+                          } else if (!value.contains('@')) {
+                            return 'Enter a valid email';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          filled: true,
+                          fillColor: Colors.white70,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        obscureText: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter password';
+                          } else if (value.length < 6) {
+                            return 'Password must be at least 6 characters';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: _firstNameController,
+                        decoration: InputDecoration(
+                          labelText: 'First Name',
+                          filled: true,
+                          fillColor: Colors.white70,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        validator: (value) => value!.isEmpty ? 'Enter first name' : null,
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: _lastNameController,
+                        decoration: InputDecoration(
+                          labelText: 'Last Name',
+                          filled: true,
+                          fillColor: Colors.white70,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        validator: (value) => value!.isEmpty ? 'Enter last name' : null,
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: _mobileController,
+                        decoration: InputDecoration(
+                          labelText: 'Mobile',
+                          filled: true,
+                          fillColor: Colors.white70,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        validator: (value) => value!.isEmpty ? 'Enter mobile number' : null,
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: _photoController,
+                        decoration: InputDecoration(
+                          labelText: 'Photo URL',
+                          filled: true,
+                          fillColor: Colors.white70,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        validator: (value) => value!.isEmpty ? 'Enter photo URL' : null,
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: _register,
+                        child: Text('Register'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

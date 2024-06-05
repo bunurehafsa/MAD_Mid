@@ -34,8 +34,25 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _children[_currentIndex],
+      body: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/1.jpg'), 
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // Main content
+          _children[_currentIndex],
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromARGB(255, 124, 155, 190),
+        selectedFontSize: 12,
+        selectedItemColor: Colors.white,
         onTap: onTabTapped,
         currentIndex: _currentIndex,
         items: [
@@ -46,12 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.countertops),
             label: 'Counter',
-          )
+          ),
         ],
       ),
     );
   }
 }
+
+
 
 class ListViewPage extends StatefulWidget {
   final int itemCount;
@@ -86,13 +105,30 @@ class _ListViewPageState extends State<ListViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('List View')),
+      appBar: AppBar(title: Text('List View'),
+      backgroundColor: Color.fromARGB(255, 124, 155, 190),
+      ),
       body: ListView.builder(
         itemCount: _items.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(_items[index]['title']),
-            subtitle: Text(_items[index]['body']),
+          final color = index % 2 == 0 ? Color.fromARGB(255, 221, 189, 211) : Color.fromARGB(255, 176, 227, 243);
+          return Container(
+            margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 4,
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+            child: ListTile(
+              title: Text(_items[index]['title']),
+              subtitle: Text(_items[index]['body']),
+            ),
           );
         },
       ),
@@ -130,7 +166,8 @@ class _CounterPageState extends State<CounterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Counter')),
+      appBar: AppBar(title: Text('Counter'),
+      backgroundColor: Color.fromARGB(255, 124, 155, 190),),
       body: Center(
         child: Text('Counter: $_counter', style: TextStyle(fontSize: 24)),
       ),
