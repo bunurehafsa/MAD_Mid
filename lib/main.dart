@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mad_mid/Registration.dart';
+import 'package:mad_mid/login.dart';
+import 'package:mad_mid/lastpage.dart';
+import 'package:mad_mid/home.dart';
+
 
 void main() {
   runApp(const MyApp());
